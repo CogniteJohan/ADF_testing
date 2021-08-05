@@ -1,0 +1,7 @@
+{
+	"name": "JohanMacIntegrationRuntime",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Integration Runtime on my Mac against ms sql running on Docker"
+	}
+}

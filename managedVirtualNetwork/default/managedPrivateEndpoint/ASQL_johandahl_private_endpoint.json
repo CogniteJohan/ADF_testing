@@ -1,0 +1,10 @@
+{
+	"name": "ASQL_johandahl_private_endpoint",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/531564ca-ed4c-48b5-b4d0-6363b20c3aeb/resourceGroups/johandahl-testing/providers/Microsoft.Sql/servers/johandahl-server-test",
+		"groupId": "sqlServer",
+		"fqdns": [
+			"johandahl-server-test.database.windows.net"
+		]
+	}
+}

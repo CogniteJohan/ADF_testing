@@ -1,0 +1,14 @@
+{
+	"name": "http_lego",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Test data, lego from rebrickable",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://cdn.rebrickable.com/media/downloads/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

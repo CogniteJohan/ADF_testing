@@ -1,0 +1,9 @@
+{
+	"name": "adf-testing-johan",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b7dc7513-6aea-4b15-a70b-ff568b57b63f",
+		"tenantId": "a9ae5b54-3600-4917-a9dc-3020723360b3"
+	}
+}
