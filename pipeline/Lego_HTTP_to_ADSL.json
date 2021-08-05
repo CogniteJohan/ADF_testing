@@ -82,7 +82,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "HTTP_Lego",
+						"referenceName": "ADLS_Lego",
 						"type": "DatasetReference",
 						"parameters": {
 							"FileName": {
