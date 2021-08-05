@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-testing-johan"
+		},
+		"ASQL_johandahl_db_testing_connectionString": {
+			"value": ""
+		},
+		"AzBlob_johandahl_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_johandahl_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_johandahl_properties_typeProperties_url": {
+			"value": "https://johandahladls.dfs.core.windows.net"
+		},
+		"http_lego_properties_typeProperties_url": {
+			"value": "https://cdn.rebrickable.com/media/downloads/"
+		},
+		"ASQL_johandahl_private_endpoint_properties_privateLinkResourceId": {
+			"value": "/subscriptions/531564ca-ed4c-48b5-b4d0-6363b20c3aeb/resourceGroups/johandahl-testing/providers/Microsoft.Sql/servers/johandahl-server-test"
+		},
+		"ASQL_johandahl_private_endpoint_properties_groupId": {
+			"value": "sqlServer"
+		},
+		"ASQL_johandahl_private_endpoint_properties_fqdns": {
+			"value": [
+				"johandahl-server-test.database.windows.net"
+			]
+		}
+	}
+}

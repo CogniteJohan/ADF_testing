@@ -1,0 +1,100 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-testing-johan"
+		},
+		"ASQL_johandahl_db_testing_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ASQL_johandahl_db_testing'"
+		},
+		"AzBlob_johandahl_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzBlob_johandahl'"
+		},
+		"AzureDataLakeStorage_johandahl_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage_johandahl'"
+		},
+		"AzureDataLakeStorage_johandahl_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://johandahladls.dfs.core.windows.net"
+		},
+		"http_lego_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cdn.rebrickable.com/media/downloads/"
+		},
+		"ASQL_johandahl_private_endpoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531564ca-ed4c-48b5-b4d0-6363b20c3aeb/resourceGroups/johandahl-testing/providers/Microsoft.Sql/servers/johandahl-server-test"
+		},
+		"ASQL_johandahl_private_endpoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"ASQL_johandahl_private_endpoint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"johandahl-server-test.database.windows.net"
+			]
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-testing-johan_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzBlob_johandahl_connectionString": {
+						"value": "[parameters('AzBlob_johandahl_connectionString')]"
+					},
+					"AzureDataLakeStorage_johandahl_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage_johandahl_accountKey')]"
+					},
+					"ASQL_johandahl_db_testing_connectionString": {
+						"value": "[parameters('ASQL_johandahl_db_testing_connectionString')]"
+					},
+					"AzureDataLakeStorage_johandahl_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_johandahl_properties_typeProperties_url')]"
+					},
+					"http_lego_properties_typeProperties_url": {
+						"value": "[parameters('http_lego_properties_typeProperties_url')]"
+					},
+					"ASQL_johandahl_private_endpoint_properties_privateLinkResourceId": {
+						"value": "[parameters('ASQL_johandahl_private_endpoint_properties_privateLinkResourceId')]"
+					},
+					"ASQL_johandahl_private_endpoint_properties_groupId": {
+						"value": "[parameters('ASQL_johandahl_private_endpoint_properties_groupId')]"
+					},
+					"ASQL_johandahl_private_endpoint_properties_fqdns": {
+						"value": "[parameters('ASQL_johandahl_private_endpoint_properties_fqdns')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
