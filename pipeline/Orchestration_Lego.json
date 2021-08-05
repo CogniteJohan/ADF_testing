@@ -29,7 +29,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Lego_HTTP_to_ADSL_Themes",
+						"referenceName": "Lego_HTTP_to_ADSL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

@@ -1,13 +1,13 @@
 {
-	"name": "HTTP_Lego",
+	"name": "ADLS_Lego",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "http_lego",
+			"referenceName": "AzureDataLakeStorage_johandahl",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
 			"FileName": {
-				"type": "string",
+				"type": "String",
 				"defaultValue": "FileName"
 			}
 		},
@@ -15,15 +15,14 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation",
-				"relativeUrl": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
 					"value": "@{dataset().FileName}.csv",
 					"type": "Expression"
-				}
+				},
+				"fileSystem": "lego"
 			},
 			"columnDelimiter": ",",
-			"rowDelimiter": "\n",
-			"compressionCodec": "gzip",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""

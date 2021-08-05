@@ -1,9 +1,10 @@
 {
-	"name": "Lego_HTTP_to_ADSL_Themes",
+	"name": "Lego_HTTP_to_ADSL",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Themes from HTTP to ADLS",
+				"name": "Copy from HTTP to ADLS",
+				"description": "Copy file(s) from Rebrickable to Azure Data Lake Storage",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,11 +17,11 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "themes.csv.gz"
+						"value": "@{pipeline().parameters.FileName}.csv"
 					},
 					{
 						"name": "Destination",
-						"value": "lego//themes.csv"
+						"value": "lego//@{pipeline().parameters.FileName}.csv"
 					}
 				],
 				"typeProperties": {
@@ -59,25 +60,46 @@
 								"referenceName": "AzBlob_johandahl",
 								"type": "LinkedServiceReference"
 							},
-							"path": "lego/errors/themes"
+							"path": {
+								"value": "lego/errors/@{pipeline().parameters.FileName}.csv",
+								"type": "Expression"
+							}
 						}
 					},
 					"dataIntegrationUnits": 2
 				},
 				"inputs": [
 					{
-						"referenceName": "HTTP_Lego_Themes",
-						"type": "DatasetReference"
+						"referenceName": "HTTP_Lego",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@pipeline().parameters.FileName",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ADLS_Lego_Themes",
-						"type": "DatasetReference"
+						"referenceName": "HTTP_Lego",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@pipeline().parameters.FileName",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"FileName": {
+				"type": "String",
+				"defaultValue": "FileName"
+			}
+		},
 		"annotations": [
 			"Extraction"
 		],
