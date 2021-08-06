@@ -17,7 +17,12 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "Lego_Themes",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"ADLSLegoThemes": {
+								"FileName": "FileName"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
