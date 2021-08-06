@@ -23,7 +23,14 @@
 			{
 				"name": "If Load All Files",
 				"type": "IfCondition",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
@@ -52,6 +59,26 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Set ListOfFiles",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "If Load All Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ListOfFiles",
+					"value": {
+						"value": "Load @{length(variables('Files'))} files: @{join(variables('Files'), ',')}",
+						"type": "Expression"
+					}
 				}
 			}
 		],
