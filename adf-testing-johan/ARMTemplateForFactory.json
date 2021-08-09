@@ -70,9 +70,7 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"ADLSLegoThemes": {
-										"FileName": "FileName"
-									},
+									"ADLSLegoThemes": {},
 									"ASQLLegoThemes": {}
 								}
 							},
@@ -228,16 +226,7 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "@{pipeline().parameters.FileName}.csv"
-							},
-							{
-								"name": "Destination",
-								"value": "lego//@{pipeline().parameters.FileName}.csv"
-							}
-						],
+						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "DelimitedTextSource",
@@ -275,7 +264,7 @@
 										"type": "LinkedServiceReference"
 									},
 									"path": {
-										"value": "lego/errors/@{pipeline().parameters.FileName}.csv",
+										"value": "lego/errors/themes.csv",
 										"type": "Expression"
 									}
 								}
@@ -293,19 +282,11 @@
 							{
 								"referenceName": "ADLS_Lego_Themes",
 								"type": "DatasetReference",
-								"parameters": {
-									"FileName": "FileName"
-								}
+								"parameters": {}
 							}
 						]
 					}
 				],
-				"parameters": {
-					"FileName": {
-						"type": "String",
-						"defaultValue": "FileName"
-					}
-				},
 				"folder": {
 					"name": "Themes Only"
 				},
@@ -572,12 +553,6 @@
 				"linkedServiceName": {
 					"referenceName": "AzureDataLakeStorage_johandahl",
 					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FileName": {
-						"type": "String",
-						"defaultValue": "FileName"
-					}
 				},
 				"folder": {
 					"name": "Themes Only"
@@ -865,7 +840,7 @@
 							"name": "AddLoadDate"
 						}
 					],
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ADLSLegoThemes\nADLSLegoThemes derive(load_date = currentDate()) ~> AddLoadDate\nAddLoadDate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> ASQLLegoThemes"
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ADLSLegoThemes\nADLSLegoThemes derive(load_date = currentDate()) ~> AddLoadDate\nAddLoadDate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> ASQLLegoThemes"
 				}
 			},
 			"dependsOn": [
