@@ -68,14 +68,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ASQL_johandahl_db_testing_connectionString": {
+						"value": "[parameters('ASQL_johandahl_db_testing_connectionString')]"
+					},
 					"AzBlob_johandahl_connectionString": {
 						"value": "[parameters('AzBlob_johandahl_connectionString')]"
 					},
 					"AzureDataLakeStorage_johandahl_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage_johandahl_accountKey')]"
-					},
-					"ASQL_johandahl_db_testing_connectionString": {
-						"value": "[parameters('ASQL_johandahl_db_testing_connectionString')]"
 					},
 					"AzureDataLakeStorage_johandahl_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage_johandahl_properties_typeProperties_url')]"

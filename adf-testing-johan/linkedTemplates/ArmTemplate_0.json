@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-testing-johan"
 		},
+		"ASQL_johandahl_db_testing_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ASQL_johandahl_db_testing'"
+		},
 		"AzBlob_johandahl_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzBlob_johandahl'"
@@ -14,10 +18,6 @@
 		"AzureDataLakeStorage_johandahl_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage_johandahl'"
-		},
-		"ASQL_johandahl_db_testing_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ASQL_johandahl_db_testing'"
 		},
 		"AzureDataLakeStorage_johandahl_properties_typeProperties_url": {
 			"type": "string",
@@ -47,7 +47,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/LoadMainOrAllFiles')]",
+			"name": "[concat(parameters('factoryName'), '/LoadMainOrAllFiles_Test')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -147,6 +147,19 @@
 					}
 				},
 				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ASQL_johandahl_db_testing')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('ASQL_johandahl_db_testing_connectionString')]"
+				}
 			},
 			"dependsOn": []
 		},
@@ -305,6 +318,30 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage_johandahl')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ASQL_Lego_Themes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ASQL_johandahl_db_testing",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Themes Only"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "lego",
+					"table": "themes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ASQL_johandahl_db_testing')]"
 			]
 		},
 		{
@@ -638,49 +675,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ASQL_johandahl_db_testing')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('ASQL_johandahl_db_testing_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntimeForSQLConnection",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeForSQLConnection')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ASQL_Lego_Themes')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ASQL_johandahl_db_testing",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Themes Only"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "lego",
-					"table": "themes"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ASQL_johandahl_db_testing')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Lego_Themes')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -766,17 +760,35 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Orchestration_Lego')]",
+			"name": "[concat(parameters('factoryName'), '/LoadMainOrAllFiles')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Lego_ADSL_to_ASQL_Themes",
-						"type": "ExecutePipeline",
+						"name": "Set Files",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "Files",
+							"value": [
+								"colors",
+								"inventories",
+								"inventory_parts",
+								"part_categories",
+								"parts",
+								"sets",
+								"themes"
+							]
+						}
+					},
+					{
+						"name": "If Load All Files",
+						"type": "IfCondition",
 						"dependsOn": [
 							{
-								"activity": "Lego_HTTP_to_ADSL_Themes",
+								"activity": "Set Files",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -784,34 +796,90 @@
 						],
 						"userProperties": [],
 						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Lego_ADSL_to_ASQL_Themes",
-								"type": "PipelineReference"
+							"expression": {
+								"value": "@pipeline().parameters.LoadAllFiles",
+								"type": "Expression"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"ifTrueActivities": [
+								{
+									"name": "Append Inventory Sets",
+									"type": "AppendVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "Files",
+										"value": "inventory_sets"
+									}
+								},
+								{
+									"name": "Append Part Relationships",
+									"type": "AppendVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "Files",
+										"value": "part_relationships"
+									}
+								}
+							]
 						}
 					},
 					{
-						"name": "Lego_HTTP_to_ADSL_Themes",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"name": "ForEach File",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "If Load All Files",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Lego_HTTP_to_ADSL",
-								"type": "PipelineReference"
+							"items": {
+								"value": "@variables('Files')",
+								"type": "Expression"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "Lego_HTTP_to_ADSL",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "Lego_HTTP_to_ADSL",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"FileName": {
+												"value": "@item()",
+												"type": "Expression"
+											}
+										}
+									}
+								}
+							]
 						}
 					}
 				],
-				"annotations": [],
-				"lastPublishTime": "2021-08-04T12:33:26Z"
+				"parameters": {
+					"LoadAllFiles": {
+						"type": "bool",
+						"defaultValue": false
+					}
+				},
+				"variables": {
+					"Files": {
+						"type": "Array"
+					}
+				},
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Lego_ADSL_to_ASQL_Themes')]",
 				"[concat(variables('factoryId'), '/pipelines/Lego_HTTP_to_ADSL')]"
 			]
 		}
