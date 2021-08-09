@@ -91,6 +91,9 @@
 				"defaultValue": "FileName"
 			}
 		},
+		"folder": {
+			"name": "Themes Only"
+		},
 		"annotations": [
 			"Extraction"
 		],

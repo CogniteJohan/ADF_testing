@@ -5,6 +5,9 @@
 			"referenceName": "ASQL_johandahl_db_testing",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Themes Only"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],

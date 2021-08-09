@@ -11,6 +11,9 @@
 				"defaultValue": "FileName"
 			}
 		},
+		"folder": {
+			"name": "Themes Only"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

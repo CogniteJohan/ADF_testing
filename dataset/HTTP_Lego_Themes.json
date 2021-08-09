@@ -5,6 +5,9 @@
 			"referenceName": "http_lego",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Themes Only"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
