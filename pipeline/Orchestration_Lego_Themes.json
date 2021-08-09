@@ -1,0 +1,43 @@
+{
+	"name": "Orchestration_Lego_Themes",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lego_ADSL_to_ASQL_Themes",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Lego_HTTP_to_ADSL_Themes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Lego_ADSL_to_ASQL_Themes",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Lego_HTTP_to_ADSL_Themes",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Lego_HTTP_to_ADSL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-08-04T12:33:26Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
