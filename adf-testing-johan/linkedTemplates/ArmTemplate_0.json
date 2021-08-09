@@ -288,6 +288,9 @@
 						"defaultValue": "FileName"
 					}
 				},
+				"folder": {
+					"name": "Themes Only"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -356,6 +359,9 @@
 				"linkedServiceName": {
 					"referenceName": "http_lego",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Themes Only"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -640,6 +646,9 @@
 						"defaultValue": "FileName"
 					}
 				},
+				"folder": {
+					"name": "Themes Only"
+				},
 				"annotations": [
 					"Extraction"
 				],
@@ -678,6 +687,9 @@
 				"linkedServiceName": {
 					"referenceName": "ASQL_johandahl_db_testing",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Themes Only"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -768,6 +780,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "Themes Only"
+				},
 				"annotations": [],
 				"lastPublishTime": "2021-06-29T14:14:27Z"
 			},
