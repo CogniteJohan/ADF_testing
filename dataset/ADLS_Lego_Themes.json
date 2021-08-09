@@ -5,12 +5,6 @@
 			"referenceName": "AzureDataLakeStorage_johandahl",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"FileName": {
-				"type": "String",
-				"defaultValue": "FileName"
-			}
-		},
 		"folder": {
 			"name": "Themes Only"
 		},

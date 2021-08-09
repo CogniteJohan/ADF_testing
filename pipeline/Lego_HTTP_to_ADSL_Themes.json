@@ -14,16 +14,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "@{pipeline().parameters.FileName}.csv"
-					},
-					{
-						"name": "Destination",
-						"value": "lego//@{pipeline().parameters.FileName}.csv"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
@@ -61,7 +52,7 @@
 								"type": "LinkedServiceReference"
 							},
 							"path": {
-								"value": "lego/errors/@{pipeline().parameters.FileName}.csv",
+								"value": "lego/errors/themes.csv",
 								"type": "Expression"
 							}
 						}
@@ -77,20 +68,11 @@
 				"outputs": [
 					{
 						"referenceName": "ADLS_Lego_Themes",
-						"type": "DatasetReference",
-						"parameters": {
-							"FileName": "FileName"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"parameters": {
-			"FileName": {
-				"type": "String",
-				"defaultValue": "FileName"
-			}
-		},
 		"folder": {
 			"name": "Themes Only"
 		},
