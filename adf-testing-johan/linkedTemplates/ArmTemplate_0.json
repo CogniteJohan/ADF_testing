@@ -331,7 +331,7 @@
 					"location": {
 						"type": "HttpServerLocation",
 						"relativeUrl": {
-							"value": "@{dataset().FileName}.csv",
+							"value": "@{dataset().FileName}.csv.gz",
 							"type": "Expression"
 						}
 					},
@@ -545,25 +545,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ASQL_johandahl_db_testing')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('ASQL_johandahl_db_testing_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntimeForSQLConnection",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeForSQLConnection')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Lego_HTTP_to_ADSL_Themes')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -668,6 +649,25 @@
 				"[concat(variables('factoryId'), '/datasets/HTTP_Lego_Themes')]",
 				"[concat(variables('factoryId'), '/datasets/ADLS_Lego_Themes')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzBlob_johandahl')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ASQL_johandahl_db_testing')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('ASQL_johandahl_db_testing_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntimeForSQLConnection",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeForSQLConnection')]"
 			]
 		},
 		{
