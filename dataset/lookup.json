@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "lookup.csv",
 				"fileSystem": "lego-lookup"
 			},
 			"columnDelimiter": ",",
